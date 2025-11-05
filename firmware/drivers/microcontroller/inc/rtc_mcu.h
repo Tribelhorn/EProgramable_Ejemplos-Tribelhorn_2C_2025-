@@ -45,7 +45,7 @@
  */
 typedef struct {
    uint16_t year;	    /* 1 to 4095 */
-   uint8_t  month;      /* 1 to 12   */
+   uint8_t  month;     /* 1 to 12   */
    uint8_t  mday;	    /* 1 to 31   */
    uint8_t  wday;	    /* 1 to 7    */
    uint8_t  hour;	    /* 0 to 23   */
