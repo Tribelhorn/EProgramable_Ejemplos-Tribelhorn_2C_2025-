@@ -13,6 +13,8 @@
 #include "stepper_24byj48.h"
 #include "buzzer.h"
 #include "gpio_mcu.h"
+#include "uart_mcu.h"
+#include "switch.h"
 
 /*==================[macros and definitions]=================================*/
 
@@ -36,12 +38,16 @@ rtc_t fecha_hora = {
     .sec = 0,
 };
 
-uint8_t control_motor = 0;
 uint16_t posicion = 0;
 
-volatile uint16_t pasos_motor = 1200;
+volatile uint16_t pasos_motor = 1000;
 
-uint32_t PERIODO = 40000000;
+uint32_t PERIODO = 60000000;
+
+char buffer[7];  //Para enviar la cadena al BT//
+
+
+uint16_t teclas;
 
 TaskHandle_t preguntar_task_handle = NULL;	
 TaskHandle_t mover_task_handle = NULL;
@@ -52,7 +58,7 @@ stepper_t motor = {
     .coilC = GPIO_20,
     .coilD = GPIO_19,
     .mode = STEPPER_FULL_STEP,
-    .step_delay_ms = 15  /**< tiempo entre pasos en ms */
+    .step_delay_ms = 10  /**< tiempo entre pasos en ms */
 };
 
 uint16_t casillas[14] ={9999,9999,9999,
@@ -62,8 +68,7 @@ uint16_t casillas[14] ={9999,9999,9999,
 
 /*==================[internal functions declaration]=========================*/
 /**
- * @brief Función a ejecutarse ante un interrupción de recepción 
- * a través de la conexión BLE.
+ * @brief Función a ejecutarse internamente
  * 
  * @param data      Puntero a array de datos recibidos
  * @param length    Longitud del array de datos recibidos
@@ -74,7 +79,6 @@ void PuestaACero(){
     while(GPIORead(GPIO_12)==1){
         vTaskDelay(10 / portTICK_PERIOD_MS);    
         StepperStep(&motor, 50);
-        LedToggle(LED_2);
     }
 }
 
@@ -86,29 +90,36 @@ static void tarea_preguntar(void *pvParameter) {
         uint16_t hora_militar = (fecha_hora.hour*100)+(fecha_hora.min);
         for (int i = 0; i < 14; i++) {
             if (casillas[i] == hora_militar) {
-                control_motor = !control_motor;
                 posicion = i+1;
-            }
-            else {
-                PuestaACero();
+                xTaskNotifyGive(mover_task_handle);
             }
         }
 	}
 }
 
+
+void leer_switches(void) {
+	teclas  = SwitchesRead();
+    switch(teclas){
+    	case SWITCH_1:    			
+            PuestaACero();
+    }
+}
+
 static void tarea_mover(void *pvParameter) {
     while (1) {    
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-        if (control_motor) {
-            BuzzerOn();        
-            StepperStep(&motor, posicion*pasos_motor);
-            uint16_t frec = 440;
-            uint16_t tiempo = 3000;
-            BuzzerPlayTone(frec, tiempo);
-            BuzzerOff();
-            control_motor = 0;
-            posicion = 0;
-        }
+        PuestaACero();
+        BuzzerOn();        
+        StepperStep(&motor, posicion*pasos_motor);
+        uint16_t frec = 440;
+        uint16_t tiempo = 3000;
+        BuzzerPlayTone(frec, tiempo);
+        BuzzerOff();
+        BleSendString("Hora de la pastilla ");
+        sprintf(buffer, "%u", posicion);
+        BleSendString(buffer);
+        BleSendString("\nPresione la tecla 1 cuando retire la pastilla \n");
     }
 }
 
@@ -122,18 +133,19 @@ void leer_info(uint8_t * data, uint8_t length){
         fecha_hora.hour = hora_actual;
         fecha_hora.min = min_actual;
         RtcConfig(&fecha_hora);
+        BleSendString("Hora configurada \n");
     }
 
-    else if (data[0] == LETRA_P && length >= 8) {
+    else if (data[0] == LETRA_P && length >= 9) {
         uint16_t casilla = (((data[2]-NUMERO_0)*10)+(data[3]-NUMERO_0)-1); 
         uint16_t hora_pastilla = ( ((data[5]-NUMERO_0)*1000) + ((data[6]-NUMERO_0)*100) + ((data[7]-NUMERO_0)*10) + ((data[8]-NUMERO_0)) );
         casillas[casilla] = hora_pastilla;    
+        BleSendString("Horario recibido \n");
     }
 }
 
 void Fun_Timer(void* param){
     vTaskNotifyGiveFromISR(preguntar_task_handle, pdFALSE);		
-    vTaskNotifyGiveFromISR(mover_task_handle, pdFALSE);
 }
 
 /*==================[external functions definition]==========================*/
@@ -146,7 +158,7 @@ void app_main(void){
 
     ble_config_t ble_configuration = {
         .device_name = "PASTILLERO",
-        .func_p = leer_info  //Deberia ir directo a la función o una con vtask//
+        .func_p = leer_info  
     };
 
     timer_config_t timer_1 = {				//Esta struct la definen en los drivers//
@@ -157,9 +169,11 @@ void app_main(void){
     };
 
 
-	xTaskCreate(&tarea_preguntar, "Preguntar", 4096, NULL, 5, &preguntar_task_handle);
-    xTaskCreate(&tarea_mover, "Mover", 4096, NULL, 5, &mover_task_handle);
+	xTaskCreate(&tarea_preguntar, "Preguntar", 8192, NULL, 5, &preguntar_task_handle);
+    xTaskCreate(&tarea_mover, "Mover", 8192, NULL, 5, &mover_task_handle);
 
+    SwitchesInit();
+    SwitchActivInt(SWITCH_1, leer_switches, NULL);
 
     StepperInit(&motor);
     GPIOInit(GPIO_12, GPIO_INPUT);   //Sensor//
@@ -169,8 +183,6 @@ void app_main(void){
     GPIOInit(GPIO_13, GPIO_OUTPUT);
 
     BuzzerInit(GPIO_13);
-
-    
 
 
     BleInit(&ble_configuration);
