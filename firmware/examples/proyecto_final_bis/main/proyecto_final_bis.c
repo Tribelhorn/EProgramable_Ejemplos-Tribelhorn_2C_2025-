@@ -1,3 +1,17 @@
+/**
+ * @file proyecto_final_bis.c
+ * @brief Firmware del pastillero automático con ESP32-C6, BLE, RTC, motor paso a paso, sensor FC-123 y buzzer.
+ *
+ * 
+ * Implementa:
+ * - Recepción de horarios por BLE
+ * - Configuración de hora RTC
+ * - Activación de motor para entregar pastillas
+ * - Aviso acústico con buzzer
+ * - Detección de retiro de pastilla
+ * - Posicionamiento a cero mediante un sensor
+ */
+
 /*==================[inclusions]=============================================*/
 #include <stdio.h>
 #include <stdint.h>
@@ -21,13 +35,18 @@
 #define CONFIG_BLINK_PERIOD 1000
 #define LED_BT	LED_1
 
+/** @brief Código ASCII de la letra 'A' */
 #define LETRA_A 65
+
+/** @brief Código ASCII de la letra 'P' */
 #define LETRA_P 80
+
+/** @brief Código ASCII del numero '0' */
 #define NUMERO_0 48
+
 /*==================[internal data definition]===============================*/
 
-uint32_t primer_horario = 0000;
-
+/** @brief Estructura RTC con fecha inicial arbitraria. */
 rtc_t fecha_hora = {
     .year = 2025,
     .month = 1,
@@ -38,20 +57,28 @@ rtc_t fecha_hora = {
     .sec = 0,
 };
 
+/** @brief Casilla seleccionada para entregar la pastilla (Inicialmente en la posición 0). */
 uint16_t posicion = 0;
 
+/** @brief Cantidad de pasos por casilla. */
 volatile uint16_t pasos_motor = 1000;
 
+/** @brief Período del timer en microsegundos (un minuto). */
 uint32_t PERIODO = 60000000;
 
+/** @brief Buffer para enviar mensajes por Bluetooth. */
 char buffer[7];  //Para enviar la cadena al BT//
 
-
+/** @brief Variable para almacenar el estado de los switches. */
 uint16_t teclas;
 
+/** @brief Handle de la tarea encargada de verificar horarios. */
 TaskHandle_t preguntar_task_handle = NULL;	
+
+/** @brief Handle de la tarea encargada del movimiento del motor. */
 TaskHandle_t mover_task_handle = NULL;
 
+/** @brief Configuración del motor paso a paso. */
 stepper_t motor = {
     .coilA = GPIO_22,
     .coilB = GPIO_21,
@@ -61,20 +88,20 @@ stepper_t motor = {
     .step_delay_ms = 10  /**< tiempo entre pasos en ms */
 };
 
+/**
+ * @brief Horarios configurados para cada casilla en formato HHMM.
+ * (Se inicializan en 9999 para indicar "vacío").
+ */
 uint16_t casillas[14] ={9999,9999,9999,
                         9999,9999,9999,9999,
                         9999,9999,9999,9999,
                         9999,9999,9999 };
 
 /*==================[internal functions declaration]=========================*/
+
 /**
- * @brief Función a ejecutarse internamente
- * 
- * @param data      Puntero a array de datos recibidos
- * @param length    Longitud del array de datos recibidos
+ * @brief Lleva el motor a la posición de referencia (cero) usando el sensor en el GPIO_12.
  */
-
-
 void PuestaACero(){
     while(GPIORead(GPIO_12)==1){
         vTaskDelay(10 / portTICK_PERIOD_MS);    
@@ -82,7 +109,11 @@ void PuestaACero(){
     }
 }
 
-
+/**
+ * @brief Tarea encargada de revisar la hora actual y compararla con los horarios programados.
+ *
+ * @param pvParameter No utilizado.
+ */
 static void tarea_preguntar(void *pvParameter) {
 	while (true) {
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
@@ -97,7 +128,10 @@ static void tarea_preguntar(void *pvParameter) {
 	}
 }
 
-
+/**
+ * @brief Llamada en interrupción del switch.  
+ * Permite la puesta a cero manual.
+ */
 void leer_switches(void) {
 	teclas  = SwitchesRead();
     switch(teclas){
@@ -106,6 +140,11 @@ void leer_switches(void) {
     }
 }
 
+/**
+ * @brief Tarea encargada de accionar el motor y emitir alertas cuando corresponde entregar pastillas.
+ *
+ * @param pvParameter No utilizado.
+ */
 static void tarea_mover(void *pvParameter) {
     while (1) {    
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
@@ -124,6 +163,12 @@ static void tarea_mover(void *pvParameter) {
 }
 
 
+/**
+ * @brief Recepción de datos por BLE
+ * 
+ * @param data      Puntero a array de datos recibidos
+ * @param length    Longitud del array de datos recibidos
+ */
 void leer_info(uint8_t * data, uint8_t length){
     //Lee el horario de toma en formato (P-casilla-horario militar) = (P-CC-HHMM)/
     //O setea la hora actual como (A-horario militar) = (A-HHMM) //
@@ -144,12 +189,22 @@ void leer_info(uint8_t * data, uint8_t length){
     }
 }
 
+/**
+ * @brief Funcion a la cual llama periódicamente el timer.  
+ * Notifica a la tarea de verificación de horarios.
+ *
+ * @param param Parámetro no utilizado.
+ */
 void Fun_Timer(void* param){
     vTaskNotifyGiveFromISR(preguntar_task_handle, pdFALSE);		
 }
 
 /*==================[external functions definition]==========================*/
 
+
+/**
+ * @brief Inicializa todos los periféricos, tareas, BLE, RTC y timer.
+ */
 void app_main(void){
 
     LedsInit();

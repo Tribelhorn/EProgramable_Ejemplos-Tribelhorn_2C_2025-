@@ -1,0 +1,664 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Proyecto_Final: Referencia del archivo C:/Repositorios/EProgramable_Ejemplos-Tribelhorn_2C_2025-/firmware/examples/proyecto_final_bis/main/proyecto_final_bis.c</title>
+<link rel="icon" href="icon.ico" type="image/x-icon" />
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="fiuner.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Proyecto_Final<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">Pastillero configurable por Bluetooth</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('proyecto__final__bis_8c.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Referencia del archivo proyecto_final_bis.c</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Firmware del pastillero automático con ESP32-C6, BLE, RTC, motor paso a paso, sensor FC-123 y buzzer.  
+<a href="#details">Más...</a></p>
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &quot;freertos/FreeRTOS.h&quot;</code><br />
+<code>#include &quot;freertos/task.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="led_8h_source.html">led.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="ble__mcu_8h_source.html">ble_mcu.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="rtc__mcu_8h_source.html">rtc_mcu.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="timer__mcu_8h_source.html">timer_mcu.h</a>&quot;</code><br />
+<code>#include &quot;stepper_24byj48.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="buzzer_8h_source.html">buzzer.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="gpio__mcu_8h_source.html">gpio_mcu.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="uart__mcu_8h_source.html">uart_mcu.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="switch_8h_source.html">switch.h</a>&quot;</code><br />
+</div>
+<p><a href="proyecto__final__bis_8c_source.html">Ir al código fuente de este archivo.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+defines</h2></td></tr>
+<tr class="memitem:a3df1b4cad09974bfc68858fad7cdc054" id="r_a3df1b4cad09974bfc68858fad7cdc054"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3df1b4cad09974bfc68858fad7cdc054">CONFIG_BLINK_PERIOD</a>&#160;&#160;&#160;1000</td></tr>
+<tr class="memitem:a7a3ccd8a43b5c5e8a4d573780da1fd4a" id="r_a7a3ccd8a43b5c5e8a4d573780da1fd4a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7a3ccd8a43b5c5e8a4d573780da1fd4a">LED_BT</a>&#160;&#160;&#160;<a class="el" href="group___l_e_d.html#ggab6831a7d06c0a2bc69f9b024f6445a80a11a9adb9054de1fe01d6a6750075f57b">LED_1</a></td></tr>
+<tr class="memitem:afea4a35bbd92334ef826065f8681fb73" id="r_afea4a35bbd92334ef826065f8681fb73"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afea4a35bbd92334ef826065f8681fb73">LETRA_A</a>&#160;&#160;&#160;65</td></tr>
+<tr class="memdesc:afea4a35bbd92334ef826065f8681fb73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Código ASCII de la letra 'A'.  <br /></td></tr>
+<tr class="memitem:a7f6e8577076fc3664f7fc4a873edcae2" id="r_a7f6e8577076fc3664f7fc4a873edcae2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f6e8577076fc3664f7fc4a873edcae2">LETRA_P</a>&#160;&#160;&#160;80</td></tr>
+<tr class="memdesc:a7f6e8577076fc3664f7fc4a873edcae2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Código ASCII de la letra 'P'.  <br /></td></tr>
+<tr class="memitem:a759f8e3176c5b444a4d3d3b78ff3e71b" id="r_a759f8e3176c5b444a4d3d3b78ff3e71b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a759f8e3176c5b444a4d3d3b78ff3e71b">NUMERO_0</a>&#160;&#160;&#160;48</td></tr>
+<tr class="memdesc:a759f8e3176c5b444a4d3d3b78ff3e71b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Código ASCII del numero '0'.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Funciones</h2></td></tr>
+<tr class="memitem:a9f9bb63ddfe128bd8c68612483de534d" id="r_a9f9bb63ddfe128bd8c68612483de534d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f9bb63ddfe128bd8c68612483de534d">PuestaACero</a> ()</td></tr>
+<tr class="memdesc:a9f9bb63ddfe128bd8c68612483de534d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lleva el motor a la posición de referencia (cero) usando el sensor en el GPIO_12.  <br /></td></tr>
+<tr class="memitem:af7830aa03ead7b07c82307a85e2aca15" id="r_af7830aa03ead7b07c82307a85e2aca15"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7830aa03ead7b07c82307a85e2aca15">leer_switches</a> (void)</td></tr>
+<tr class="memdesc:af7830aa03ead7b07c82307a85e2aca15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Llamada en interrupción del switch. <br  />
+ Permite la puesta a cero manual.  <br /></td></tr>
+<tr class="memitem:ab0fd46e92794e81be63ecfa3345e6525" id="r_ab0fd46e92794e81be63ecfa3345e6525"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab0fd46e92794e81be63ecfa3345e6525">leer_info</a> (uint8_t *data, uint8_t length)</td></tr>
+<tr class="memdesc:ab0fd46e92794e81be63ecfa3345e6525"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recepción de datos por BLE.  <br /></td></tr>
+<tr class="memitem:a24fc876b9d8ebd456866b49e8a2f1dd6" id="r_a24fc876b9d8ebd456866b49e8a2f1dd6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24fc876b9d8ebd456866b49e8a2f1dd6">Fun_Timer</a> (void *param)</td></tr>
+<tr class="memdesc:a24fc876b9d8ebd456866b49e8a2f1dd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funcion a la cual llama periódicamente el timer. <br  />
+ Notifica a la tarea de verificación de horarios.  <br /></td></tr>
+<tr class="memitem:a630544a7f0a2cc40d8a7fefab7e2fe70" id="r_a630544a7f0a2cc40d8a7fefab7e2fe70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a630544a7f0a2cc40d8a7fefab7e2fe70">app_main</a> (void)</td></tr>
+<tr class="memdesc:a630544a7f0a2cc40d8a7fefab7e2fe70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicializa todos los periféricos, tareas, BLE, RTC y timer.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a8ab324904980f7d998d495b6cea6ef5c" id="r_a8ab324904980f7d998d495b6cea6ef5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structrtc__t.html">rtc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8ab324904980f7d998d495b6cea6ef5c">fecha_hora</a></td></tr>
+<tr class="memdesc:a8ab324904980f7d998d495b6cea6ef5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estructura RTC con fecha inicial arbitraria.  <br /></td></tr>
+<tr class="memitem:ae7e066b3fd607853e747bed4f7af7183" id="r_ae7e066b3fd607853e747bed4f7af7183"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae7e066b3fd607853e747bed4f7af7183">posicion</a> = 0</td></tr>
+<tr class="memdesc:ae7e066b3fd607853e747bed4f7af7183"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casilla seleccionada para entregar la pastilla (Inicialmente en la posición 0).  <br /></td></tr>
+<tr class="memitem:a4e1c8a2749e87369ff879c76a071a377" id="r_a4e1c8a2749e87369ff879c76a071a377"><td class="memItemLeft" align="right" valign="top">volatile uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e1c8a2749e87369ff879c76a071a377">pasos_motor</a> = 1000</td></tr>
+<tr class="memdesc:a4e1c8a2749e87369ff879c76a071a377"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cantidad de pasos por casilla.  <br /></td></tr>
+<tr class="memitem:ae71c0f820e70df5d2a919d6f4fc25dc2" id="r_ae71c0f820e70df5d2a919d6f4fc25dc2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae71c0f820e70df5d2a919d6f4fc25dc2">PERIODO</a> = 60000000</td></tr>
+<tr class="memdesc:ae71c0f820e70df5d2a919d6f4fc25dc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Período del timer en microsegundos (un minuto).  <br /></td></tr>
+<tr class="memitem:ac5dbc147e2aa09644a9baa2ea3e2d1fd" id="r_ac5dbc147e2aa09644a9baa2ea3e2d1fd"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5dbc147e2aa09644a9baa2ea3e2d1fd">buffer</a> [7]</td></tr>
+<tr class="memdesc:ac5dbc147e2aa09644a9baa2ea3e2d1fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer para enviar mensajes por Bluetooth.  <br /></td></tr>
+<tr class="memitem:acd3504838648be0f9805a17dbd0c1a8b" id="r_acd3504838648be0f9805a17dbd0c1a8b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd3504838648be0f9805a17dbd0c1a8b">teclas</a></td></tr>
+<tr class="memdesc:acd3504838648be0f9805a17dbd0c1a8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable para almacenar el estado de los switches.  <br /></td></tr>
+<tr class="memitem:afe2f035b943bcc894127b98b06d4b151" id="r_afe2f035b943bcc894127b98b06d4b151"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe2f035b943bcc894127b98b06d4b151">preguntar_task_handle</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="memdesc:afe2f035b943bcc894127b98b06d4b151"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle de la tarea encargada de verificar horarios.  <br /></td></tr>
+<tr class="memitem:acfa32877bd33209e42890284503d74b6" id="r_acfa32877bd33209e42890284503d74b6"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acfa32877bd33209e42890284503d74b6">mover_task_handle</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="memdesc:acfa32877bd33209e42890284503d74b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle de la tarea encargada del movimiento del motor.  <br /></td></tr>
+<tr class="memitem:a2aeb9fb983b929678bd0aa47a7c05a2a" id="r_a2aeb9fb983b929678bd0aa47a7c05a2a"><td class="memItemLeft" align="right" valign="top">stepper_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2aeb9fb983b929678bd0aa47a7c05a2a">motor</a></td></tr>
+<tr class="memdesc:a2aeb9fb983b929678bd0aa47a7c05a2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuración del motor paso a paso.  <br /></td></tr>
+<tr class="memitem:a7382744280beda302443ade4aa21d2a4" id="r_a7382744280beda302443ade4aa21d2a4"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7382744280beda302443ade4aa21d2a4">casillas</a> [14]</td></tr>
+<tr class="memdesc:a7382744280beda302443ade4aa21d2a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Horarios configurados para cada casilla en formato HHMM. (Se inicializan en 9999 para indicar "vacío").  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Firmware del pastillero automático con ESP32-C6, BLE, RTC, motor paso a paso, sensor FC-123 y buzzer. </p>
+<p>Implementa:</p><ul>
+<li>Recepción de horarios por BLE</li>
+<li>Configuración de hora RTC</li>
+<li>Activación de motor para entregar pastillas</li>
+<li>Aviso acústico con buzzer</li>
+<li>Detección de retiro de pastilla</li>
+<li>Posicionamiento a cero mediante un sensor </li>
+</ul>
+
+<p class="definition">Definición en el archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Documentación de «define»</h2>
+<a id="a3df1b4cad09974bfc68858fad7cdc054" name="a3df1b4cad09974bfc68858fad7cdc054"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3df1b4cad09974bfc68858fad7cdc054">&#9670;&#160;</a></span>CONFIG_BLINK_PERIOD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONFIG_BLINK_PERIOD&#160;&#160;&#160;1000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00035">35</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00208">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a7a3ccd8a43b5c5e8a4d573780da1fd4a" name="a7a3ccd8a43b5c5e8a4d573780da1fd4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a3ccd8a43b5c5e8a4d573780da1fd4a">&#9670;&#160;</a></span>LED_BT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LED_BT&#160;&#160;&#160;<a class="el" href="group___l_e_d.html#ggab6831a7d06c0a2bc69f9b024f6445a80a11a9adb9054de1fe01d6a6750075f57b">LED_1</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00036">36</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00208">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="afea4a35bbd92334ef826065f8681fb73" name="afea4a35bbd92334ef826065f8681fb73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afea4a35bbd92334ef826065f8681fb73">&#9670;&#160;</a></span>LETRA_A</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LETRA_A&#160;&#160;&#160;65</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Código ASCII de la letra 'A'. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00039">39</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00172">leer_info()</a>.</p>
+
+</div>
+</div>
+<a id="a7f6e8577076fc3664f7fc4a873edcae2" name="a7f6e8577076fc3664f7fc4a873edcae2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f6e8577076fc3664f7fc4a873edcae2">&#9670;&#160;</a></span>LETRA_P</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LETRA_P&#160;&#160;&#160;80</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Código ASCII de la letra 'P'. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00042">42</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00172">leer_info()</a>.</p>
+
+</div>
+</div>
+<a id="a759f8e3176c5b444a4d3d3b78ff3e71b" name="a759f8e3176c5b444a4d3d3b78ff3e71b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a759f8e3176c5b444a4d3d3b78ff3e71b">&#9670;&#160;</a></span>NUMERO_0</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define NUMERO_0&#160;&#160;&#160;48</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Código ASCII del numero '0'. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00045">45</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00172">leer_info()</a>.</p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones</h2>
+<a id="a630544a7f0a2cc40d8a7fefab7e2fe70" name="a630544a7f0a2cc40d8a7fefab7e2fe70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a630544a7f0a2cc40d8a7fefab7e2fe70">&#9670;&#160;</a></span>app_main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void app_main </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Inicializa todos los periféricos, tareas, BLE, RTC y timer. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00208">208</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="ble__hid__mcu_8h_source.html#l00039">BLE_CONNECTED</a>, <a class="el" href="ble__hid__mcu_8h_source.html#l00038">BLE_DISCONNECTED</a>, <a class="el" href="ble__hid__mcu_8h_source.html#l00037">BLE_OFF</a>, <a class="el" href="ble__mcu_8c_source.html#l00452">BleInit()</a>, <a class="el" href="ble__mcu_8c_source.html#l00530">BleStatus()</a>, <a class="el" href="buzzer_8c_source.html#l00043">BuzzerInit()</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00035">CONFIG_BLINK_PERIOD</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00050">fecha_hora</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00198">Fun_Timer()</a>, <a class="el" href="gpio__mcu_8h_source.html#l00064">GPIO_12</a>, <a class="el" href="gpio__mcu_8h_source.html#l00065">GPIO_13</a>, <a class="el" href="gpio__mcu_8h_source.html#l00043">GPIO_INPUT</a>, <a class="el" href="gpio__mcu_8h_source.html#l00044">GPIO_OUTPUT</a>, <a class="el" href="gpio__mcu_8c_source.html#l00067">GPIOInit()</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00036">LED_BT</a>, <a class="el" href="led_8c_source.html#l00065">LedOff()</a>, <a class="el" href="led_8c_source.html#l00046">LedOn()</a>, <a class="el" href="led_8c_source.html#l00031">LedsInit()</a>, <a class="el" href="led_8c_source.html#l00084">LedToggle()</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00172">leer_info()</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00135">leer_switches()</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00082">motor</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00079">mover_task_handle</a>, <a class="el" href="ili9341_8c_source.html#l00019">NULL</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00067">PERIODO</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00076">preguntar_task_handle</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00105">PuestaACero()</a>, <a class="el" href="rtc__mcu_8c_source.html#l00029">RtcConfig()</a>, <a class="el" href="switch_8h_source.html#l00032">SWITCH_1</a>, <a class="el" href="switch_8c_source.html#l00047">SwitchActivInt()</a>, <a class="el" href="switch_8c_source.html#l00029">SwitchesInit()</a>, <a class="el" href="timer__mcu_8h_source.html#l00040">timer_config_t::timer</a>, <a class="el" href="timer__mcu_8h_source.html#l00032">TIMER_A</a>, <a class="el" href="timer__mcu_8c_source.html#l00067">TimerInit()</a> y <a class="el" href="timer__mcu_8c_source.html#l00116">TimerStart()</a>.</p>
+
+</div>
+</div>
+<a id="a24fc876b9d8ebd456866b49e8a2f1dd6" name="a24fc876b9d8ebd456866b49e8a2f1dd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24fc876b9d8ebd456866b49e8a2f1dd6">&#9670;&#160;</a></span>Fun_Timer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Fun_Timer </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>param</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funcion a la cual llama periódicamente el timer. <br  />
+ Notifica a la tarea de verificación de horarios. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">param</td><td>Parámetro no utilizado. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00198">198</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="proyecto__final__bis_8c_source.html#l00076">preguntar_task_handle</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00208">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="ab0fd46e92794e81be63ecfa3345e6525" name="ab0fd46e92794e81be63ecfa3345e6525"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0fd46e92794e81be63ecfa3345e6525">&#9670;&#160;</a></span>leer_info()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void leer_info </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>length</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Recepción de datos por BLE. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>Puntero a array de datos recibidos </td></tr>
+    <tr><td class="paramname">length</td><td>Longitud del array de datos recibidos </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00172">172</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="ble__mcu_8c_source.html#l00544">BleSendString()</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00095">casillas</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00050">fecha_hora</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00039">LETRA_A</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00042">LETRA_P</a>, <a class="el" href="proyecto__final__bis_8c_source.html#l00045">NUMERO_0</a> y <a class="el" href="rtc__mcu_8c_source.html#l00029">RtcConfig()</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00208">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="af7830aa03ead7b07c82307a85e2aca15" name="af7830aa03ead7b07c82307a85e2aca15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7830aa03ead7b07c82307a85e2aca15">&#9670;&#160;</a></span>leer_switches()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void leer_switches </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Llamada en interrupción del switch. <br  />
+ Permite la puesta a cero manual. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00135">135</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="proyecto__final__bis_8c_source.html#l00105">PuestaACero()</a>, <a class="el" href="switch_8h_source.html#l00032">SWITCH_1</a>, <a class="el" href="switch_8c_source.html#l00038">SwitchesRead()</a> y <a class="el" href="proyecto__final__bis_8c_source.html#l00073">teclas</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00208">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a9f9bb63ddfe128bd8c68612483de534d" name="a9f9bb63ddfe128bd8c68612483de534d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f9bb63ddfe128bd8c68612483de534d">&#9670;&#160;</a></span>PuestaACero()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PuestaACero </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Lleva el motor a la posición de referencia (cero) usando el sensor en el GPIO_12. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00105">105</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="gpio__mcu_8h_source.html#l00064">GPIO_12</a>, <a class="el" href="gpio__mcu_8c_source.html#l00101">GPIORead()</a> y <a class="el" href="proyecto__final__bis_8c_source.html#l00082">motor</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00208">app_main()</a> y <a class="el" href="proyecto__final__bis_8c_source.html#l00135">leer_switches()</a>.</p>
+
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Documentación de variables</h2>
+<a id="ac5dbc147e2aa09644a9baa2ea3e2d1fd" name="ac5dbc147e2aa09644a9baa2ea3e2d1fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5dbc147e2aa09644a9baa2ea3e2d1fd">&#9670;&#160;</a></span>buffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char buffer[7]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Buffer para enviar mensajes por Bluetooth. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00070">70</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="ble__hid__mcu_8c_source.html#l01421">BleHidSendKeyboard()</a>, <a class="el" href="ble__hid__mcu_8c_source.html#l01443">BleHidSendMouse()</a>, <a class="el" href="mpu6050_8c_source.html#l01822">MPU6050_getAcceleration()</a>, <a class="el" href="mpu6050_8c_source.html#l01833">MPU6050_getAccelerationX()</a>, <a class="el" href="mpu6050_8c_source.html#l01842">MPU6050_getAccelerationY()</a>, <a class="el" href="mpu6050_8c_source.html#l01851">MPU6050_getAccelerationZ()</a>, <a class="el" href="mpu6050_8c_source.html#l02226">MPU6050_getAccelerometerPowerOnDelay()</a>, <a class="el" href="mpu6050_8c_source.html#l00701">MPU6050_getAccelFIFOEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l00305">MPU6050_getAccelXSelfTest()</a>, <a class="el" href="mpu6050_8c_source.html#l00247">MPU6050_getAccelXSelfTestFactoryTrim()</a>, <a class="el" href="mpu6050_8c_source.html#l00320">MPU6050_getAccelYSelfTest()</a>, <a class="el" href="mpu6050_8c_source.html#l00257">MPU6050_getAccelYSelfTestFactoryTrim()</a>, <a class="el" href="mpu6050_8c_source.html#l00335">MPU6050_getAccelZSelfTest()</a>, <a class="el" href="mpu6050_8c_source.html#l00267">MPU6050_getAccelZSelfTestFactoryTrim()</a>, <a class="el" href="mpu6050_8c_source.html#l00071">MPU6050_getAuxVDDIOLevel()</a>, <a class="el" href="mpu6050_8c_source.html#l01504">MPU6050_getClockOutputEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02493">MPU6050_getClockSource()</a>, <a class="el" href="mpu6050_8c_source.html#l02752">MPU6050_getDeviceID()</a>, <a class="el" href="mpu6050_8c_source.html#l00409">MPU6050_getDHPFMode()</a>, <a class="el" href="mpu6050_8c_source.html#l00190">MPU6050_getDLPFMode()</a>, <a class="el" href="mpu6050_8c_source.html#l00149">MPU6050_getExternalFrameSync()</a>, <a class="el" href="mpu6050_8c_source.html#l02011">MPU6050_getExternalSensorByte()</a>, <a class="el" href="mpu6050_8c_source.html#l02029">MPU6050_getExternalSensorDWord()</a>, <a class="el" href="mpu6050_8c_source.html#l02020">MPU6050_getExternalSensorWord()</a>, <a class="el" href="mpu6050_8c_source.html#l02133">MPU6050_getExternalShadowDelayEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02724">MPU6050_getFIFOByte()</a>, <a class="el" href="mpu6050_8c_source.html#l02692">MPU6050_getFIFOCount()</a>, <a class="el" href="mpu6050_8c_source.html#l02325">MPU6050_getFIFOEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02265">MPU6050_getFreefallDetectionCounterDecrement()</a>, <a class="el" href="mpu6050_8c_source.html#l00472">MPU6050_getFreefallDetectionDuration()</a>, <a class="el" href="mpu6050_8c_source.html#l00440">MPU6050_getFreefallDetectionThreshold()</a>, <a class="el" href="mpu6050_8c_source.html#l01453">MPU6050_getFSyncInterruptEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01434">MPU6050_getFSyncInterruptLevel()</a>, <a class="el" href="mpu6050_8c_source.html#l00363">MPU6050_getFullScaleAccelRange()</a>, <a class="el" href="mpu6050_8c_source.html#l00225">MPU6050_getFullScaleGyroRange()</a>, <a class="el" href="mpu6050_8c_source.html#l00276">MPU6050_getGyroXSelfTestFactoryTrim()</a>, <a class="el" href="mpu6050_8c_source.html#l00285">MPU6050_getGyroYSelfTestFactoryTrim()</a>, <a class="el" href="mpu6050_8c_source.html#l00294">MPU6050_getGyroZSelfTestFactoryTrim()</a>, <a class="el" href="mpu6050_8c_source.html#l01477">MPU6050_getI2CBypassEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02349">MPU6050_getI2CMasterModeEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01648">MPU6050_getIntDataReadyEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01738">MPU6050_getIntDataReadyStatus()</a>, <a class="el" href="mpu6050_8c_source.html#l01530">MPU6050_getIntEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01377">MPU6050_getInterruptDrive()</a>, <a class="el" href="mpu6050_8c_source.html#l01396">MPU6050_getInterruptLatch()</a>, <a class="el" href="mpu6050_8c_source.html#l01415">MPU6050_getInterruptLatchClear()</a>, <a class="el" href="mpu6050_8c_source.html#l01358">MPU6050_getInterruptMode()</a>, <a class="el" href="mpu6050_8c_source.html#l01608">MPU6050_getIntFIFOBufferOverflowEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01715">MPU6050_getIntFIFOBufferOverflowStatus()</a>, <a class="el" href="mpu6050_8c_source.html#l01551">MPU6050_getIntFreefallEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01682">MPU6050_getIntFreefallStatus()</a>, <a class="el" href="mpu6050_8c_source.html#l01628">MPU6050_getIntI2CMasterEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01727">MPU6050_getIntI2CMasterStatus()</a>, <a class="el" href="mpu6050_8c_source.html#l01570">MPU6050_getIntMotionEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01693">MPU6050_getIntMotionStatus()</a>, <a class="el" href="mpu6050_8c_source.html#l01671">MPU6050_getIntStatus()</a>, <a class="el" href="mpu6050_8c_source.html#l01589">MPU6050_getIntZeroMotionEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01704">MPU6050_getIntZeroMotionStatus()</a>, <a class="el" href="mpu6050_8c_source.html#l01290">MPU6050_getLostArbitration()</a>, <a class="el" href="mpu6050_8c_source.html#l00889">MPU6050_getMasterClockSpeed()</a>, <a class="el" href="mpu6050_8c_source.html#l01777">MPU6050_getMotion6()</a>, <a class="el" href="mpu6050_8c_source.html#l02301">MPU6050_getMotionDetectionCounterDecrement()</a>, <a class="el" href="mpu6050_8c_source.html#l00536">MPU6050_getMotionDetectionDuration()</a>, <a class="el" href="mpu6050_8c_source.html#l00506">MPU6050_getMotionDetectionThreshold()</a>, <a class="el" href="mpu6050_8c_source.html#l02040">MPU6050_getMotionStatus()</a>, <a class="el" href="mpu6050_8c_source.html#l00785">MPU6050_getMultiMasterEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01267">MPU6050_getPassthroughStatus()</a>, <a class="el" href="mpu6050_8c_source.html#l00107">MPU6050_getRate()</a>, <a class="el" href="mpu6050_8c_source.html#l01901">MPU6050_getRotation()</a>, <a class="el" href="mpu6050_8c_source.html#l01912">MPU6050_getRotationX()</a>, <a class="el" href="mpu6050_8c_source.html#l01921">MPU6050_getRotationY()</a>, <a class="el" href="mpu6050_8c_source.html#l01930">MPU6050_getRotationZ()</a>, <a class="el" href="mpu6050_8c_source.html#l01251">MPU6050_getSlate4InputByte()</a>, <a class="el" href="mpu6050_8c_source.html#l00755">MPU6050_getSlave0FIFOEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01345">MPU6050_getSlave0Nack()</a>, <a class="el" href="mpu6050_8c_source.html#l00737">MPU6050_getSlave1FIFOEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01334">MPU6050_getSlave1Nack()</a>, <a class="el" href="mpu6050_8c_source.html#l00719">MPU6050_getSlave2FIFOEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01323">MPU6050_getSlave2Nack()</a>, <a class="el" href="mpu6050_8c_source.html#l00826">MPU6050_getSlave3FIFOEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01312">MPU6050_getSlave3Nack()</a>, <a class="el" href="mpu6050_8c_source.html#l01118">MPU6050_getSlave4Address()</a>, <a class="el" href="mpu6050_8c_source.html#l01164">MPU6050_getSlave4Enabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01185">MPU6050_getSlave4InterruptEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01279">MPU6050_getSlave4IsDone()</a>, <a class="el" href="mpu6050_8c_source.html#l01233">MPU6050_getSlave4MasterDelay()</a>, <a class="el" href="mpu6050_8c_source.html#l01301">MPU6050_getSlave4Nack()</a>, <a class="el" href="mpu6050_8c_source.html#l01137">MPU6050_getSlave4Register()</a>, <a class="el" href="mpu6050_8c_source.html#l01206">MPU6050_getSlave4WriteMode()</a>, <a class="el" href="mpu6050_8c_source.html#l00944">MPU6050_getSlaveAddress()</a>, <a class="el" href="mpu6050_8c_source.html#l01091">MPU6050_getSlaveDataLength()</a>, <a class="el" href="mpu6050_8c_source.html#l02164">MPU6050_getSlaveDelayEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l00992">MPU6050_getSlaveEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l00848">MPU6050_getSlaveReadWriteTransitionEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l00970">MPU6050_getSlaveRegister()</a>, <a class="el" href="mpu6050_8c_source.html#l01018">MPU6050_getSlaveWordByteSwap()</a>, <a class="el" href="mpu6050_8c_source.html#l01069">MPU6050_getSlaveWordGroupOffset()</a>, <a class="el" href="mpu6050_8c_source.html#l01043">MPU6050_getSlaveWriteMode()</a>, <a class="el" href="mpu6050_8c_source.html#l02424">MPU6050_getSleepEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02574">MPU6050_getStandbyXAccelEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02631">MPU6050_getStandbyXGyroEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02593">MPU6050_getStandbyYAccelEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02650">MPU6050_getStandbyYGyroEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02612">MPU6050_getStandbyZAccelEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02669">MPU6050_getStandbyZGyroEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l01862">MPU6050_getTemperature()</a>, <a class="el" href="mpu6050_8c_source.html#l00628">MPU6050_getTempFIFOEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02469">MPU6050_getTempSensorEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l00808">MPU6050_getWaitForExternalSensorEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02445">MPU6050_getWakeCycleEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02556">MPU6050_getWakeFrequency()</a>, <a class="el" href="mpu6050_8c_source.html#l00646">MPU6050_getXGyroFIFOEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02049">MPU6050_getXNegMotionDetected()</a>, <a class="el" href="mpu6050_8c_source.html#l02058">MPU6050_getXPosMotionDetected()</a>, <a class="el" href="mpu6050_8c_source.html#l00664">MPU6050_getYGyroFIFOEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02067">MPU6050_getYNegMotionDetected()</a>, <a class="el" href="mpu6050_8c_source.html#l02076">MPU6050_getYPosMotionDetected()</a>, <a class="el" href="mpu6050_8c_source.html#l02103">MPU6050_getZeroMotionDetected()</a>, <a class="el" href="mpu6050_8c_source.html#l00607">MPU6050_getZeroMotionDetectionDuration()</a>, <a class="el" href="mpu6050_8c_source.html#l00576">MPU6050_getZeroMotionDetectionThreshold()</a>, <a class="el" href="mpu6050_8c_source.html#l00682">MPU6050_getZGyroFIFOEnabled()</a>, <a class="el" href="mpu6050_8c_source.html#l02085">MPU6050_getZNegMotionDetected()</a> y <a class="el" href="mpu6050_8c_source.html#l02094">MPU6050_getZPosMotionDetected()</a>.</p>
+
+</div>
+</div>
+<a id="a7382744280beda302443ade4aa21d2a4" name="a7382744280beda302443ade4aa21d2a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7382744280beda302443ade4aa21d2a4">&#9670;&#160;</a></span>casillas</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t casillas[14]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valor inicial:</b><div class="fragment"><div class="line">={9999,9999,9999,</div>
+<div class="line">                        9999,9999,9999,9999,</div>
+<div class="line">                        9999,9999,9999,9999,</div>
+<div class="line">                        9999,9999,9999 }</div>
+</div><!-- fragment -->
+<p>Horarios configurados para cada casilla en formato HHMM. (Se inicializan en 9999 para indicar "vacío"). </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00095">95</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00172">leer_info()</a>.</p>
+
+</div>
+</div>
+<a id="a8ab324904980f7d998d495b6cea6ef5c" name="a8ab324904980f7d998d495b6cea6ef5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ab324904980f7d998d495b6cea6ef5c">&#9670;&#160;</a></span>fecha_hora</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structrtc__t.html">rtc_t</a> fecha_hora</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valor inicial:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    .year = 2025,</div>
+<div class="line">    .month = 1,</div>
+<div class="line">    .mday = 1,</div>
+<div class="line">    .wday = 1,</div>
+<div class="line">    .hour = 0,</div>
+<div class="line">    .min = 0,</div>
+<div class="line">    .sec = 0,</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+<p>Estructura RTC con fecha inicial arbitraria. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00050">50</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00208">app_main()</a> y <a class="el" href="proyecto__final__bis_8c_source.html#l00172">leer_info()</a>.</p>
+
+</div>
+</div>
+<a id="a2aeb9fb983b929678bd0aa47a7c05a2a" name="a2aeb9fb983b929678bd0aa47a7c05a2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2aeb9fb983b929678bd0aa47a7c05a2a">&#9670;&#160;</a></span>motor</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">stepper_t motor</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valor inicial:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    .coilA = <a class="code hl_enumvalue" href="group___g_i_o_p.html#ggaf65604147d0244c9b13cfdc865ad5393aca7c5f2acf755d61b35d05ea921c79eb">GPIO_22</a>,</div>
+<div class="line">    .coilB = <a class="code hl_enumvalue" href="group___g_i_o_p.html#ggaf65604147d0244c9b13cfdc865ad5393a32ff7e9a2f00d396ff2b2b62af571d7c">GPIO_21</a>,</div>
+<div class="line">    .coilC = <a class="code hl_enumvalue" href="group___g_i_o_p.html#ggaf65604147d0244c9b13cfdc865ad5393a081be372da926e3ca6f612b267854e95">GPIO_20</a>,</div>
+<div class="line">    .coilD = <a class="code hl_enumvalue" href="group___g_i_o_p.html#ggaf65604147d0244c9b13cfdc865ad5393aa2918c94bcf473e7ff31138b6333f847">GPIO_19</a>,</div>
+<div class="line">    .mode = STEPPER_FULL_STEP,</div>
+<div class="line">    .step_delay_ms = 10  </div>
+<div class="line">}</div>
+<div class="ttc" id="agroup___g_i_o_p_html_ggaf65604147d0244c9b13cfdc865ad5393a081be372da926e3ca6f612b267854e95"><div class="ttname"><a href="group___g_i_o_p.html#ggaf65604147d0244c9b13cfdc865ad5393a081be372da926e3ca6f612b267854e95">GPIO_20</a></div><div class="ttdeci">@ GPIO_20</div><div class="ttdef"><b>Definition</b> <a href="gpio__mcu_8h_source.html#l00072">gpio_mcu.h:72</a></div></div>
+<div class="ttc" id="agroup___g_i_o_p_html_ggaf65604147d0244c9b13cfdc865ad5393a32ff7e9a2f00d396ff2b2b62af571d7c"><div class="ttname"><a href="group___g_i_o_p.html#ggaf65604147d0244c9b13cfdc865ad5393a32ff7e9a2f00d396ff2b2b62af571d7c">GPIO_21</a></div><div class="ttdeci">@ GPIO_21</div><div class="ttdef"><b>Definition</b> <a href="gpio__mcu_8h_source.html#l00073">gpio_mcu.h:73</a></div></div>
+<div class="ttc" id="agroup___g_i_o_p_html_ggaf65604147d0244c9b13cfdc865ad5393aa2918c94bcf473e7ff31138b6333f847"><div class="ttname"><a href="group___g_i_o_p.html#ggaf65604147d0244c9b13cfdc865ad5393aa2918c94bcf473e7ff31138b6333f847">GPIO_19</a></div><div class="ttdeci">@ GPIO_19</div><div class="ttdef"><b>Definition</b> <a href="gpio__mcu_8h_source.html#l00071">gpio_mcu.h:71</a></div></div>
+<div class="ttc" id="agroup___g_i_o_p_html_ggaf65604147d0244c9b13cfdc865ad5393aca7c5f2acf755d61b35d05ea921c79eb"><div class="ttname"><a href="group___g_i_o_p.html#ggaf65604147d0244c9b13cfdc865ad5393aca7c5f2acf755d61b35d05ea921c79eb">GPIO_22</a></div><div class="ttdeci">@ GPIO_22</div><div class="ttdef"><b>Definition</b> <a href="gpio__mcu_8h_source.html#l00074">gpio_mcu.h:74</a></div></div>
+</div><!-- fragment -->
+<p>Configuración del motor paso a paso. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00082">82</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00208">app_main()</a>, <a class="el" href="l293_8c_source.html#l00051">L293SetSpeed()</a> y <a class="el" href="proyecto__final__bis_8c_source.html#l00105">PuestaACero()</a>.</p>
+
+</div>
+</div>
+<a id="acfa32877bd33209e42890284503d74b6" name="acfa32877bd33209e42890284503d74b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfa32877bd33209e42890284503d74b6">&#9670;&#160;</a></span>mover_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t mover_task_handle = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Handle de la tarea encargada del movimiento del motor. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00079">79</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00208">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a4e1c8a2749e87369ff879c76a071a377" name="a4e1c8a2749e87369ff879c76a071a377"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e1c8a2749e87369ff879c76a071a377">&#9670;&#160;</a></span>pasos_motor</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint16_t pasos_motor = 1000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cantidad de pasos por casilla. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00064">64</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+</div>
+</div>
+<a id="ae71c0f820e70df5d2a919d6f4fc25dc2" name="ae71c0f820e70df5d2a919d6f4fc25dc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae71c0f820e70df5d2a919d6f4fc25dc2">&#9670;&#160;</a></span>PERIODO</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t PERIODO = 60000000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Período del timer en microsegundos (un minuto). </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00067">67</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00208">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="ae7e066b3fd607853e747bed4f7af7183" name="ae7e066b3fd607853e747bed4f7af7183"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7e066b3fd607853e747bed4f7af7183">&#9670;&#160;</a></span>posicion</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t posicion = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Casilla seleccionada para entregar la pastilla (Inicialmente en la posición 0). </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00061">61</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+</div>
+</div>
+<a id="afe2f035b943bcc894127b98b06d4b151" name="afe2f035b943bcc894127b98b06d4b151"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe2f035b943bcc894127b98b06d4b151">&#9670;&#160;</a></span>preguntar_task_handle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t preguntar_task_handle = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Handle de la tarea encargada de verificar horarios. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00076">76</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00208">app_main()</a> y <a class="el" href="proyecto__final__bis_8c_source.html#l00198">Fun_Timer()</a>.</p>
+
+</div>
+</div>
+<a id="acd3504838648be0f9805a17dbd0c1a8b" name="acd3504838648be0f9805a17dbd0c1a8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd3504838648be0f9805a17dbd0c1a8b">&#9670;&#160;</a></span>teclas</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t teclas</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable para almacenar el estado de los switches. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="proyecto__final__bis_8c_source.html#l00073">73</a> del archivo <a class="el" href="proyecto__final__bis_8c_source.html">proyecto_final_bis.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="proyecto__final__bis_8c_source.html#l00135">leer_switches()</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_94dfaf22f6659c1f018000d4ae2ade3c.html">EProgramable_Ejemplos-Tribelhorn_2C_2025-</a></li><li class="navelem"><a href="dir_c8da584cad941cf6ed279336b548a7ff.html">firmware</a></li><li class="navelem"><a href="dir_0ac0476131bfbfe2f8551345ca67554d.html">examples</a></li><li class="navelem"><a href="dir_103692198c1bbd989e041436454965ba.html">proyecto_final_bis</a></li><li class="navelem"><a href="dir_4ccd42a4b1b42dbd1d57dc447c462b2e.html">main</a></li><li class="navelem"><a href="proyecto__final__bis_8c.html">proyecto_final_bis.c</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>
